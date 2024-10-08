@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terima Kasih Atas Partisipasi Anda</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #3498db, #8e44ad);
+            color: #fff;
+        }
+
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 80%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #fff;
+        }
+
+        #thankYouMessage {
+            font-size: 1.2rem;
+            margin: 1rem 0;
+            line-height: 1.6;
+        }
+
+        input,
+        textarea,
+        button {
+            margin: 0.5rem 0;
+            padding: 0.8rem;
+            width: 100%;
+            box-sizing: border-box;
+            border: none;
+            border-radius: 5px;
+        }
+
+        input,
+        textarea {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        button {
+            background-color: #2ecc71;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #27ae60;
+            transform: scale(1.05);
+        }
+
+        .emoji {
+            font-size: 2rem;
+            position: absolute;
+            opacity: 0;
+            animation: float 5s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+
+            50% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 1;
+            }
+        }
+
+        #funPhysicsSection {
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+
+        #fact,
+        #quizQuestion,
+        #quizResult {
+            font-style: italic;
+            margin: 1rem 0;
+        }
+
+        #pendulum {
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+            position: relative;
+        }
+
+        #pendulumBall {
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 0;
+            left: 90px;
+            transform-origin: 50% -90px;
+            animation: swing 2s infinite ease-in-out;
+        }
+
+        #pendulumString {
+            width: 2px;
+            height: 100px;
+            background-color: #fff;
+            position: absolute;
+            top: 0;
+            left: 99px;
+            transform-origin: 50% 0;
+            animation: swing 2s infinite ease-in-out;
+        }
+
+        @keyframes swing {
+
+            0%,
+            100% {
+                transform: rotate(45deg);
+            }
+
+            50% {
+                transform: rotate(-45deg);
+            }
+        }
+
+        #spectralLines {
+            width: 100%;
+            height: 50px;
+            background: linear-gradient(to right,
+                    #FF0000, #FF7F00, #FFFF00, #00FF00, #0000FF, #8B00FF);
+            margin: 20px 0;
+        }
+
+        #orbitSimulation {
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+            position: relative;
+        }
+
+        #sun {
+            width: 40px;
+            height: 40px;
+            background-color: #FFD700;
+            border-radius: 50%;
+            position: absolute;
+            top: 80px;
+            left: 80px;
+        }
+
+        #planet {
+            width: 20px;
+            height: 20px;
+            background-color: #1E90FF;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 90px;
+            animation: orbit 5s linear infinite;
+        }
+
+        @keyframes orbit {
+            from {
+                transform: rotate(0deg) translateX(80px) rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg) translateX(80px) rotate(-360deg);
+            }
+        }
+
+        .participant-name {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4, #45B7D1);
+            background-size: 200% 200%;
+            color: #FFFFFF;
+            text-shadow:
+                0 0 5px rgba(255, 255, 255, 0.5),
+                0 0 10px rgba(255, 255, 255, 0.5),
+                0 0 15px rgba(255, 255, 255, 0.5),
+                0 0 20px rgba(255, 255, 255, 0.5);
+            margin: 1rem 0;
+            padding: 10px;
+            border-radius: 10px;
+            animation: gradientShift 5s ease infinite, popIn 0.5s ease-out;
+            position: relative;
+            display: inline-block;
+            z-index: 1;
+        }
+
+        .participant-name::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4, #45B7D1);
+            background-size: 400% 400%;
+            z-index: -1;
+            filter: blur(5px);
+            animation: gradientShift 5s ease infinite;
+            border-radius: 12px;
+        }
+
+        .participant-name:hover {
+            transform: perspective(1000px) rotateX(0deg) scale(1.05);
+            filter: brightness(1.2);
+            transition: all 0.3s ease;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            80% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .participant-name-container {
+            display: inline-block;
+            position: relative;
+        }
+
+        .participant-name-container::before,
+        .participant-name-container::after {
+            content: '✨';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            opacity: 0;
+            animation: twinkle 2s ease-in-out infinite;
+        }
+
+        .participant-name-container::before {
+            left: -30px;
+            animation-delay: 0.5s;
+        }
+
+        .participant-name-container::after {
+            right: -30px;
+            animation-delay: 1s;
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: 0;
+                transform: translateY(-50%) scale(0.8);
+            }
+
+            50% {
+                opacity: 1;
+                transform: translateY(-50%) scale(1.2);
+            }
+        }
+
+        #waveSimulator {
+            width: 100%;
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+
+        #waveCanvas {
+            width: 100%;
+            height: 200px;
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        .wave-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .wave-control {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 45%;
+        }
+
+        .wave-control input {
+            width: 100%;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 600px) {
+            #waveSimulator {
+                padding: 5px;
+            }
+
+            #waveCanvas {
+                height: 150px;
+            }
+
+            .wave-controls {
+                flex-direction: column;
+            }
+
+            .wave-control {
+                width: 100%;
+                margin-top: 10px;
+            }
+        }
+
+        #dopplerSimulator {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+
+        #dopplerCanvas {
+            width: 100%;
+            height: 300px;
+            background-color: #000;
+            border-radius: 5px;
+        }
+
+        .doppler-controls {
+            display: flex;
+            flex-direction: column;
+            margin-top: 10px;
+        }
+
+        .doppler-controls label {
+            margin-top: 10px;
+        }
+
+        .doppler-controls input {
+            width: 100%;
+        }
+
+        #dopplerInfo {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        #dopplerInfo p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <audio id="myAudio" autoplay loop hidden>
+        <source src="sound/bit.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <div class="container">
+        <h1>Terima Kasih! 🎉</h1>
+        <div class="participant-name-container">
+            <div id="participantName" class="participant-name"></div>
+        </div>
+        <h3>Refresh halaman untuk variasi ucapan yang lain</h3>
+        <p id="thankYouMessage"></p>
+        <textarea id="customMessage" rows="3" placeholder="Pesan kustom Anda (opsional)"></textarea>
+        <textarea id="impressionMessage" rows="3" placeholder="Kesan dan pesan Anda (opsional)"></textarea>
+        <button onclick="sendToWhatsApp()">Kirim Respons ke WhatsApp</button>
+
+        <div id="funPhysicsSection">
+            <h2>Fisika Menyenangkan</h2>
+
+            <h3>1. Kuis Fisika</h3>
+            <button onclick="getRandomQuiz()">Dapatkan Pertanyaan Kuis</button>
+            <p id="quizQuestion"></p>
+            <input type="text" id="quizAnswer" placeholder="Masukkan jawaban Anda">
+            <button onclick="checkQuizAnswer()">Periksa Jawaban</button>
+            <p id="quizResult"></p>
+
+            <h3>2. Fakta Menarik Fisika</h3>
+            <button onclick="getRandomFact()">Dapatkan Fakta Menarik</button>
+            <p id="fact"></p>
+
+            <h3>3. Simulasi Pendulum Sederhana</h3>
+            <div id="pendulum">
+                <div id="pendulumString"></div>
+                <div id="pendulumBall"></div>
+            </div>
+            <button onclick="changePendulumSpeed()">Ubah Kecepatan Pendulum</button>
+
+            <h3>4. Kalkulator Energi Kinetik</h3>
+            <input type="number" id="mass" placeholder="Massa (kg)">
+            <input type="number" id="velocity" placeholder="Kecepatan (m/s)">
+            <button onclick="calculateKineticEnergy()">Hitung Energi Kinetik</button>
+            <p id="kineticEnergyResult"></p>
+
+            <h3>5. Spektrum Cahaya</h3>
+            <div id="spectralLines"></div>
+            <p>Ini adalah representasi sederhana dari spektrum cahaya tampak.</p>
+
+            <h3>6. Simulasi Orbit Planet</h3>
+            <div id="orbitSimulation">
+                <div id="sun"></div>
+                <div id="planet"></div>
+            </div>
+            <p>Simulasi sederhana orbit planet mengelilingi matahari.</p>
+
+            <h3>7. Konversi Suhu</h3>
+            <input type="number" id="celsius" placeholder="Suhu dalam Celsius">
+            <button onclick="convertTemperature()">Konversi</button>
+            <p id="temperatureResult"></p>
+
+            <h3>8. Kalkulator Hukum Ohm</h3>
+            <input type="number" id="voltage" placeholder="Tegangan (V)">
+            <input type="number" id="resistance" placeholder="Hambatan (Ω)">
+            <button onclick="calculateCurrent()">Hitung Arus</button>
+            <p id="currentResult"></p>
+            <h3>9. Simulator Gelombang</h3>
+            <div id="waveSimulator">
+                <canvas id="waveCanvas"></canvas>
+                <div class="wave-controls">
+                    <div class="wave-control">
+                        <label for="frequency">Frekuensi:</label>
+                        <input type="range" id="frequency" min="1" max="10" value="5" step="0.1">
+                    </div>
+                    <div class="wave-control">
+                        <label for="amplitude">Amplitudo:</label>
+                        <input type="range" id="amplitude" min="10" max="80" value="40" step="1">
+                    </div>
+                </div>
+            </div>
+            <h3>10. Simulator Efek Doppler Interaktif</h3>
+            <div id="dopplerSimulator">
+                <canvas id="dopplerCanvas" width="600" height="300"></canvas>
+                <div class="doppler-controls">
+                    <label for="sourceSpeed">Kecepatan Sumber Suara:</label>
+                    <input type="range" id="sourceSpeed" min="0" max="100" value="0">
+                    <label for="observerPosition">Posisi Pengamat:</label>
+                    <input type="range" id="observerPosition" min="0" max="100" value="50">
+                </div>
+                <div id="dopplerInfo">
+                    <p>Frekuensi Asli: <span id="originalFrequency">440</span> Hz</p>
+                    <p>Frekuensi yang Didengar: <span id="perceivedFrequency">440</span> Hz</p>
+                    <p>Perubahan Pitch: <span id="pitchChange">0</span> Hz</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const thankYouMessages = [
+            "Partisipasi Anda telah mengakselerasi penelitian kami seperti partikel dalam akselerator! 🚀",
+            "Kontribusi Anda memiliki momentum yang luar biasa dalam mendorong proyek ini! 💪",
+            "Energi potensial dari masukan Anda akan dikonversi menjadi hasil yang luar biasa! ⚡",
+            "Anda telah menciptakan interferensi konstruktif yang memperkuat penelitian kami! 🌊",
+            "Seperti atom yang stabil, dukungan Anda menjadi fondasi kokoh bagi proyek ini! 🧱",
+            "Terima kasih telah meluangkan waktu dan energi Anda untuk berpartisipasi dalam angket penelitian kami. Partisipasi Anda adalah gaya gravitasi yang menarik data berharga ke pusat penelitian kami, membantu kami menyusun hasil yang lebih bermakna.",
+            "Kami sangat menghargai energi potensial yang Anda simpan untuk meluangkan waktu mengisi angket ini. Dengan energi kinetik yang Anda keluarkan melalui setiap jawaban, Anda telah memberikan kontribusi penting dalam menggerakkan roda penelitian kami.",
+            "Partisipasi Anda dalam angket ini telah memberikan momentum besar bagi kelancaran penelitian kami. Dengan setiap respons yang Anda berikan, arah penelitian ini semakin jelas dan membawa kami menuju kesimpulan yang lebih bermakna.",
+            "Seperti hukum termodinamika, kontribusi Anda membantu menjaga kesetimbangan energi dalam proses penelitian ini. Setiap jawaban yang Anda berikan menjadi bagian dari siklus informasi yang menghangatkan semangat kami untuk terus maju.",
+            "Dalam hukum Newton, sebuah objek akan terus bergerak lurus kecuali ada gaya luar yang mempengaruhinya. Terima kasih karena telah menjadi gaya luar yang mempercepat penelitian ini dengan partisipasi Anda yang berharga.",
+            "Seperti cahaya yang menyinari kegelapan, jawaban Anda menerangi penelitian kami, membantu kami melihat jalan yang lebih jelas menuju kesimpulan yang berharga.",
+            "Terima kasih telah menciptakan gelombang positif melalui partisipasi Anda. Setiap jawaban yang Anda berikan menyebar seperti gelombang informasi yang membantu memperkaya penelitian ini.",
+            "Partisipasi Anda adalah medan elektromagnetik yang memperkuat sinyal penelitian kami. Kami sangat menghargai setiap momen yang Anda habiskan untuk mengisi angket ini.",
+            "Partisipasi Anda dalam angket ini memberikan 'gaya angkat' seperti hukum Archimedes yang menopang penelitian kami. Setiap jawaban Anda membuat proyek ini semakin terapung di lautan pengetahuan.",
+            "Kontribusi Anda bagaikan energi dalam rumus Einstein, di mana partisipasi Anda (m) dan dedikasi Anda (c²) menghasilkan energi besar yang mendorong kemajuan penelitian ini. Terima kasih atas partisipasi luar biasa Anda.",
+            "Terima kasih telah menjadi bagian dari rangkaian penelitian kami. Seperti hukum Ohm, setiap jawaban Anda menambah 'tegangan' (V) yang memungkinkan arus pengetahuan (I) mengalir dengan lebih lancar melalui resistensi waktu yang Anda berikan.",
+            "Partisipasi Anda dalam angket ini memberikan orbit yang stabil seperti dalam hukum Kepler. Setiap jawaban Anda membantu penelitian kami tetap dalam lintasan yang benar menuju kesimpulan yang lebih mendalam.",
+            "Partisipasi Anda memberikan 'radiasi' informasi yang luar biasa, seperti hukum Stefan-Boltzmann(P = σT⁴) yang menyatakan bahwa energi memancar sebanding dengan suhu pangkat empat. Terima kasih telah memberikan kontribusi yang begitu 'panas' bagi penelitian kami!"
+        ];
+
+        const emojis = ["🎈", "🌟", "🔬", "📊", "🧠", "💡", "🔋", "📡"];
+
+        const facts = [
+            "Tahukah Anda bahwa cahaya membutuhkan waktu 8 menit 20 detik untuk sampai dari Matahari ke Bumi?",
+            "Dalam fisika kuantum, partikel dapat berada di dua tempat sekaligus. Ini disebut superposisi!",
+            "Lubang hitam sebenarnya bukan lubang, melainkan daerah ruang-waktu dengan gravitasi yang sangat kuat.",
+            "Waktu berjalan lebih lambat di tempat dengan gravitasi yang lebih kuat. Ini disebut dilatasi waktu gravitasi.",
+            "Neutrino adalah partikel subatomik yang hampir tidak memiliki massa dan dapat melewati hampir semua materi tanpa berinteraksi."
+        ];
+
+        const quizzes = [{
+                question: "Apa satuan untuk gaya dalam SI?",
+                answer: "Newton"
+            },
+            {
+                question: "Siapa yang merumuskan teori relativitas?",
+                answer: "Einstein"
+            },
+            {
+                question: "Apa rumus untuk energi kinetik?",
+                answer: "1/2mv^2"
+            },
+            {
+                question: "Apa nama partikel cahaya?",
+                answer: "Foton"
+            },
+            {
+                question: "Apa satuan untuk arus listrik?",
+                answer: "Ampere"
+            },
+            {
+                question: "Apa hukum pertama Newton?",
+                answer: "Hukum Kelembaman"
+            },
+            {
+                question: "Apa satuan untuk tekanan dalam SI?",
+                answer: "Pascal"
+            },
+            {
+                question: "Siapa yang menemukan hukum gravitasi?",
+                answer: "Newton"
+            },
+            {
+                question: "Apa rumus untuk percepatan?",
+                answer: "a = F/m"
+            },
+            {
+                question: "Apa satuan untuk energi dalam SI?",
+                answer: "Joule"
+            }
+        ];
+
+        let currentQuiz;
+
+        function getRandomMessage() {
+            return thankYouMessages[Math.floor(Math.random() * thankYouMessages.length)];
+        }
+
+        function createFloatingEmoji() {
+            const emoji = document.createElement("div");
+            emoji.classList.add("emoji");
+            emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            emoji.style.left = Math.random() * 100 + "%";
+            emoji.style.animationDelay = Math.random() * 5 + "s";
+            document.querySelector(".container").appendChild(emoji);
+            setTimeout(() => emoji.remove(), 5000);
+        }
+
+        setInterval(createFloatingEmoji, 1000);
+
+        document.getElementById('thankYouMessage').textContent = getRandomMessage();
+        document.addEventListener('DOMContentLoaded', function () {
+            const participantName = localStorage.getItem('participantName');
+            if (participantName) {
+                document.getElementById('participantName').textContent = participantName;
+            }
+        });
+
+        function sendToWhatsApp() {
+            const phoneNumber = "6283128645918";
+            const customMessage = document.getElementById('customMessage').value;
+            const impressionMessage = document.getElementById('impressionMessage').value;
+            const thankYouMessage = document.getElementById('thankYouMessage').textContent;
+
+            let message = `Terima kasih, ${participantName}!\n\n${thankYouMessage}`;
+            if (customMessage) {
+                message += "\n\nPesan Kustom:\n" + customMessage;
+            }
+            if (impressionMessage) {
+                message += "\n\nKesan dan Pesan:\n" + impressionMessage;
+            }
+
+            const encodedMessage = encodeURIComponent(message);
+
+            window.open(`whatsapp://send?phone=${phoneNumber}&text=${encodedMessage}`, '_blank');
+        }
+
+        function getRandomFact() {
+            document.getElementById('fact').textContent = facts[Math.floor(Math.random() * facts.length)];
+        }
+
+        function getRandomQuiz() {
+            currentQuiz = quizzes[Math.floor(Math.random() * quizzes.length)];
+            document.getElementById('quizQuestion').textContent = currentQuiz.question;
+            document.getElementById('quizAnswer').value = '';
+            document.getElementById('quizResult').textContent = '';
+        }
+
+        function checkQuizAnswer() {
+            const userAnswer = document.getElementById('quizAnswer').value.trim().toLowerCase();
+            const correctAnswer = currentQuiz.answer.toLowerCase();
+            if (userAnswer === correctAnswer) {
+                document.getElementById('quizResult').textContent = "Benar! Anda memang jenius fisika! 🎉";
+            } else {
+                document.getElementById('quizResult').textContent =
+                    `Maaf, jawaban yang benar adalah ${currentQuiz.answer}. Coba lagi!`;
+            }
+        }
+
+        function changePendulumSpeed() {
+            const pendulum = document.getElementById('pendulumBall');
+            const string = document.getElementById('pendulumString');
+            const currentDuration = parseFloat(getComputedStyle(pendulum).animationDuration);
+            const newDuration = currentDuration === 2 ? 1 : 2;
+            pendulum.style.animationDuration = `${newDuration}s`;
+            string.style.animationDuration = `${newDuration}s`;
+        }
+
+        function calculateKineticEnergy() {
+            const mass = parseFloat(document.getElementById('mass').value);
+            const velocity = parseFloat(document.getElementById('velocity').value);
+            if (isNaN(mass) || isNaN(velocity)) {
+                document.getElementById('kineticEnergyResult').textContent = "Mohon masukkan nilai yang valid.";
+            } else {
+                const kineticEnergy = 0.5 * mass * velocity * velocity;
+                document.getElementById('kineticEnergyResult').textContent =
+                    `Energi Kinetik = ${kineticEnergy.toFixed(2)} Joule`;
+            }
+        }
+
+        function convertTemperature() {
+            const celsius = parseFloat(document.getElementById('celsius').value);
+            if (isNaN(celsius)) {
+                document.getElementById('temperatureResult').textContent = "Mohon masukkan nilai yang valid.";
+            } else {
+                const fahrenheit = (celsius * 9 / 5) + 32;
+                const kelvin = celsius + 273.15;
+                document.getElementById('temperatureResult').textContent =
+                    `${celsius}°C = ${fahrenheit.toFixed(2)}°F = ${kelvin.toFixed(2)}K`;
+            }
+        }
+
+        function calculateCurrent() {
+            const voltage = parseFloat(document.getElementById('voltage').value);
+            const resistance = parseFloat(document.getElementById('resistance').value);
+            if (isNaN(voltage) || isNaN(resistance)) {
+                document.getElementById('currentResult').textContent = "Mohon masukkan nilai yang valid.";
+            } else {
+                const current = voltage / resistance;
+                document.getElementById('currentResult').textContent = `Arus = ${current.toFixed(2)} Ampere`;
+            }
+        }
+
+        // Inisialisasi
+        getRandomQuiz();
+
+        // Memulai audio background
+        document.addEventListener('DOMContentLoaded', function() {
+var audio = document.getElementById('myAudio');
+audio.play();
+});
+
+        let participantName = "";
+
+        // function setParticipantName(name) {
+        //     participantName = name;
+        //     const nameElement = document.getElementById('participantName');
+        //     nameElement.textContent = name;
+        //     nameElement.style.display = 'block';
+        // }
+        function displayParticipantName() {
+            const nameElement = document.getElementById('participantName');
+            const name = localStorage.getItem('participantName');
+            if (name) {
+                nameElement.textContent = name;
+                nameElement.style.display = 'inline-block';
+                participantName = name;
+            } else {
+                nameElement.textContent = 'Peserta';
+                nameElement.style.display = 'inline-block';
+            }
+            // Tambahkan kelas untuk memicu animasi
+            nameElement.classList.add('animate');
+        }
+        // Panggil fungsi ini dengan nama peserta saat halaman dimuat
+        window.addEventListener('load', function () {
+            displayParticipantName();
+            // ... (kode lain yang perlu dijalankan saat load)
+        });
+        // Wave Simulator
+        const panel = document.getElementById('waveCanvas');
+        const ct = panel.getContext('2d');
+        const frequencySlider = document.getElementById('frequency');
+        const amplitudeSlider = document.getElementById('amplitude');
+
+        let frequency = 5;
+        let amplitude = 40;
+        let phase = 0;
+
+        function resizeCanvas() {
+            panel.width = panel.offsetWidth;
+            panel.height = panel.offsetHeight;
+        }
+
+        function drawWave() {
+            ct.clearRect(0, 0, panel.width, panel.height);
+            ct.beginPath();
+            ct.moveTo(0, panel.height / 2);
+
+            for (let x = 0; x < panel.width; x++) {
+                const y = amplitude * Math.sin((x / panel.width) * frequency * Math.PI * 2 + phase) + panel.height / 2;
+                ct.lineTo(x, y);
+            }
+
+            ct.strokeStyle = 'white';
+            ct.lineWidth = 2;
+            ct.stroke();
+
+            phase += 0.05;
+            requestAnimationFrame(drawWave);
+        }
+
+        frequencySlider.addEventListener('input', (e) => {
+            frequency = parseFloat(e.target.value);
+        });
+
+        amplitudeSlider.addEventListener('input', (e) => {
+            amplitude = parseFloat(e.target.value);
+        });
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        drawWave();
+        // Kode JavaScript untuk Simulator Efek Doppler
+        const canvas = document.getElementById('dopplerCanvas');
+        const ctx = canvas.getContext('2d');
+        const sourceSpeedSlider = document.getElementById('sourceSpeed');
+        const observerPositionSlider = document.getElementById('observerPosition');
+        const originalFrequencySpan = document.getElementById('originalFrequency');
+        const perceivedFrequencySpan = document.getElementById('perceivedFrequency');
+        const pitchChangeSpan = document.getElementById('pitchChange');
+
+        let sourceX = 0;
+        let sourceSpeed = 0;
+        let observerPosition = 300;
+        const originalFrequency = 440; // Hz
+        const speedOfSound = 343; // m/s
+
+        function drawScene() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Gambar sumber suara
+            ctx.fillStyle = 'red';
+            ctx.beginPath();
+            ctx.arc(sourceX, 150, 10, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Gambar pengamat
+            ctx.fillStyle = 'blue';
+            ctx.beginPath();
+            ctx.arc(observerPosition, 150, 10, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Gambar gelombang suara
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+            for (let i = 0; i < 5; i++) {
+                ctx.beginPath();
+                ctx.arc(sourceX, 150, i * 50, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+        }
+
+        function updateSimulation() {
+            sourceX += sourceSpeed;
+            if (sourceX > canvas.width) sourceX = 0;
+            if (sourceX < 0) sourceX = canvas.width;
+
+            const relativeVelocity = sourceSpeed / 5; // Skala kecepatan untuk simulasi
+            const perceivedFrequency = originalFrequency * (speedOfSound / (speedOfSound - relativeVelocity));
+            const pitchChange = perceivedFrequency - originalFrequency;
+
+            perceivedFrequencySpan.textContent = perceivedFrequency.toFixed(2);
+            pitchChangeSpan.textContent = pitchChange.toFixed(2);
+
+            drawScene();
+            requestAnimationFrame(updateSimulation);
+        }
+
+        sourceSpeedSlider.addEventListener('input', (e) => {
+            sourceSpeed = (e.target.value - 50) / 10;
+        });
+
+        observerPositionSlider.addEventListener('input', (e) => {
+            observerPosition = e.target.value * 6;
+        });
+
+        updateSimulation();
+    </script>
+</body>
+
+</html>
