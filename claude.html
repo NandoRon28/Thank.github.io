@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terima Kasih Sudah Mengisi Angket!</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        @keyframes fall {
+            0% { transform: translateY(-100vh) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            animation: fall 5s linear infinite;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-blue-400 to-purple-500 min-h-screen flex items-center justify-center p-4">
+    <!-- Autoplay is allowed. -->
+    <div class="bg-white rounded-lg shadow-xl p-8 max-w-md w-full relative overflow-hidden">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Terima Kasih!</h1>
+        <div id="message" class="text-xl text-center text-gray-600 mb-6"></div>
+        <div id="animation" class="text-6xl text-center mb-6"></div>
+        
+        <form id="waForm" class="space-y-4">
+            <input type="text" id="nama" placeholder="Nama Anda" class="w-full px-4 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-400">
+            <input type="tel" id="nomorWA" placeholder="Nomor WhatsApp" class="w-full px-4 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-400">
+            <textarea id="pesanTambahan" placeholder="Pesan tambahan (opsional)" class="w-full px-4 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-400 h-24"></textarea>
+            <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition duration-300">
+                Kirim ke WhatsApp
+            </button>
+        </form>
+    </div>
+
+    <audio id="backsound" loop autoplay></audio>
+
+    <script>
+        const messages = [
+            "Wah, kamu keren banget udah ngisi angketnya!",
+            "Energi potensialmu tinggi banget, makasih ya!",
+            "Kamu tuh kayak foton, selalu menerangi hari-hari seluruh dunia!",
+            "Gravitasimu menarik kami untuk berterima kasih!",
+            "Kamu secepat cahaya dalam mengisi angket, makasih!",
+            "Responmu se-presisi pengukuran Planck, terima kasih!",
+            "Kamu luar biasa! Seperti elektron yang tak pernah berhenti bergerak!",
+            "Terima kasih! Kamu seperti hukum Newton, selalu punya reaksi yang setara.",
+            "Wah, kontribusimu secepat cahaya!",
+            "Terima kasih, jawabanmu lebih presisi dari persamaan Einstein!",
+            "Seperti gravitasi, kamu menarik!"
+        ];
+
+        const animations = ["🚀", "⚛️", "🔬", "🧲", "💡", "📊"];
+
+        const sounds = [
+            "sound/applause-cheer-236786.mp3",
+            "sound/domo-arigato-gozai-mashita-japanese-176542.mp3",
+            "sound/miaw miaw miaw song sad (lyrics video visual).mp3"
+        ];
+
+        function getRandomItem(array) {
+            return array[Math.floor(Math.random() * array.length)];
+        }
+
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            particle.textContent = getRandomItem(animations);
+            document.body.appendChild(particle);
+            setTimeout(() => particle.remove(), 5000);
+        }
+
+        function setupPage() {
+            document.getElementById('message').textContent = getRandomItem(messages);
+            document.getElementById('animation').textContent = getRandomItem(animations);
+            
+            const audio = document.getElementById('backsound');
+            audio.src = getRandomItem(sounds);
+            audio.play().catch(error => console.log("Autoplay prevented:", error));
+
+            setInterval(createParticle, 500);
+        }
+
+        window.onload = setupPage;
+
+        document.getElementById('waForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nama = document.getElementById('nama').value;
+            const nomorWA = document.getElementById('nomorWA').value;
+            const pesanTambahan = document.getElementById('pesanTambahan').value;
+            const pesan = `Halo, saya ${nama}. ${pesanTambahan}`;
+            const waURL = `https://wa.me/+6283128645918/${nomorWA}?text=${encodeURIComponent(pesan)}`;
+            window.open(waURL, '_blank');
+        });
+    </script>
+</body>
+</html>
